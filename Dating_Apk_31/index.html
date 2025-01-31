@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Screen with Navbar</title>
+    <!-- bootstrap css links -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+        integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: #d3deb7;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 45%;
+        }
+
+        .card img {
+            max-height: 250px;
+            object-fit: cover;
+        }
+
+        .profile-card .card-body {
+            text-align: center;
+        }
+
+        #matches-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .match-card {
+            width: 30%;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .match-card img {
+            max-width: 100%;
+            border-radius: 50%;
+        }
+
+        button {
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        /* Increase the font size without affecting navbar height */
+        .navbar-brand {
+            font-size: 30px;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <a class="navbar-brand ms-2" href="index.html"><b>DateNest</b></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="Search.html">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="chat.html">Chat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="notification.html">Notification</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="settings.html">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="subscription.html">Subscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile.html">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="logout()">logout</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Featured Profiles Section -->
+            <h2 class="text-center">Featured Profiles</h2>
+            <div class="col-12 card-container">
+                <div class="card profile-card" style="width: 18rem;">
+                    <img src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                        class="card-img-top" alt="Profile 1">
+                    <div class="card-body">
+                        <h5 class="card-title">John Doe</h5>
+                        <p class="card-text">25 years old, Software Developer</p>
+                        <button class="btn btn-primary" onclick="viewMore('John Doe')">View Profile</button>
+                    </div>
+                </div>
+                <div class="card profile-card" style="width: 18rem;">
+                    <img src="https://images.pexels.com/photos/1121796/pexels-photo-1121796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                        class="card-img-top" alt="Profile 2">
+                    <div class="card-body">
+                        <h5 class="card-title">James Smith</h5>
+                        <p class="card-text">30 years old, Graphic Designer</p>
+                        <button class="btn btn-primary" onclick="viewMore('James Smith')">View Profile</button>
+                    </div>
+                </div>
+                <div class="card profile-card" style="width: 18rem;">
+                    <img src="https://images.pexels.com/photos/1182825/pexels-photo-1182825.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                        class="card-img-top" alt="Profile 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Vin Diesel</h5>
+                        <p class="card-text">25 years old, Software Developer</p>
+                        <button class="btn btn-primary" onclick="viewMore('Vin Diesel')">View Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Featured Profiles Section -->
+            <h2 class="text-center">Matches</h2>
+            <div class="col-12 card-container">
+                <div class="card profile-card" style="width: 18rem;">
+                    <img src="https://images.pexels.com/photos/775279/pexels-photo-775279.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                        class="card-img-top" alt="Profile 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Ethan Brown</h5>
+                        <p class="card-text">25 years old, UX/UI Designer</p>
+                        <button class="btn btn-primary" onclick="viewMore('Ethan Brown')">View Profile</button>
+                    </div>
+                </div>
+                <div class="card profile-card" style="width: 18rem;">
+                    <img src="https://images.pexels.com/photos/842811/pexels-photo-842811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                        class="card-img-top" alt="Profile 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Mason Blue</h5>
+                        <p class="card-text">30 years old, UX/UI Designer</p>
+                        <button class="btn btn-primary" onclick="viewMore('Mason Blue')">View Profile</button>
+                    </div>
+                </div>
+                <div class="card profile-card" style="width: 18rem;">
+                    <img src="https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                        class="card-img-top" alt="Profile 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Alex White</h5>
+                        <p class="card-text">25 years old, UX/UI Designer</p>
+                        <button class="btn btn-primary" onclick="viewMore('Alex White')">View Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Quick Access Section -->
+    <div class="row mt-4">
+        <div class="col-12 text-center ">
+            <h2>Quick Access</h2>
+            <button class="btn btn-secondary" id="search-btn" onclick="search()">Search</button>
+            <button class="btn btn-secondary" id="settings-btn" onclick="settings()">Settings</button>
+        </div>
+    </div>
+    </div>
+
+
+
+    <!-- Your page content here -->
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white mt-4 ">
+        <div class="container py-3 mb-0">
+            <div class="row">
+                <!-- Profiles Link -->
+                <div class="col-6 col-md-3">
+                    <a href="profile.html" class="text-white text-decoration-none">
+                        <h5>Profile</h5>
+                    </a>
+
+                </div>
+
+                <!-- Search Link -->
+                <div class="col-6 col-md-3">
+                    <a href="search.html" class="text-white text-decoration-none">
+                        <h5>Search</h5>
+                    </a>
+                </div>
+
+                <!-- Settings Link -->
+                <div class="col-6 col-md-3">
+                    <a href="Settings.html" class="text-white text-decoration-none">
+                        <h5>Settings</h5>
+                    </a>
+                </div>
+
+                <!-- Subscription Link -->
+                <div class="col-6 col-md-3">
+                    <a href="subscription.html" class="text-white text-decoration-none">
+                        <h5>Subscription</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom Section -->
+        <div class="text-center">
+            <p class="mb-0">&copy; 2025 Your Dating App. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <!-- Full-Screen Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Profile Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Modal Content Will Be Filled By JavaScript -->
+                    <div id="modalProfileContent">
+                        <!-- Profile details will be inserted here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" id="addFriendBtn" onclick="addFriend()">Add Friend</button>
+                    <button id="chatBtn" class="text-light btn btn-primary" onclick="startChat() ">
+                        Chat
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+    <script>
+        // Function to handle the "View More" button click
+        function viewMore(profileName) {
+            // You can dynamically set the details for the profile here
+            let profileDetails = {
+                'John Doe': {
+                    image: 'https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                    name: 'John Doe',
+                    bio: "Explorer at heart 🌍, coffee addict ☕, and always planning my next trip ✈️. Looking for someone who’s down for spontaneous weekend getaways and late-night conversations. Bonus points i love hiking",
+                    email: 'john.doe@example.com',
+                    phone: '+123 456 7890',
+                    address: '1234 San Francisco, California'
+                },
+                'James Smith': {
+                    image: 'https://images.pexels.com/photos/1121796/pexels-photo-1121796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                    name: 'James Smith',
+                    bio: "Photographer 📸, painter 🎨, and all-around artsy soul. I believe in capturing moments, whether it’s through a lens or in conversation. If you’re into deep chats about movies, music, or life in general, we’ll get along great.",
+                    email: 'james.smith@example.com',
+                    phone: '+234 567 8901',
+                    address: '5678 Las Vegas, Nevada'
+                },
+                'Vin Diesel': {
+                    image: 'https://images.pexels.com/photos/1182825/pexels-photo-1182825.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                    name: 'Vin Diesel',
+                    bio: "Fluent in sarcasm, dad jokes, and making memories! 🕺 I’m all about enjoying life, whether that’s dancing at a wedding or grabbing a burger at 3 AM. Let’s see if we can make each other laugh.",
+                    email: 'emma.Brown@example.com',
+                    phone: '+234 567 8901',
+                    address: '533-98 San Francisco, California'
+
+                },
+                'Ethan Brown': {
+                    image: 'https://images.pexels.com/photos/775279/pexels-photo-775279.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                    name: 'Ethan Brown',
+                    bio: "Just a laid-back person looking for meaningful connections. I love simple things—good food 🍕, great company, and Netflix marathons. Let’s start with a chat and see where it goes!",
+                    email: 'Ethan.Brown@example.com',
+                    phone: '+234 567 8901',
+                    address: '12-78 New York City, New York'
+
+                },
+
+                'Mason Blue': {
+                    image: 'https://images.pexels.com/photos/842811/pexels-photo-842811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                    name: 'Mason Blue',
+                    bio: "Hopeless romantic here 💖. I believe in deep connections, good conversation, and old-fashioned gestures. I’m looking for someone who’s ready to build something real—plus, I make a mean spaghetti dinner 🍝.",
+                    email: 'Mason.Blue@example.com',
+                    phone: '+234 567 8901',
+                    address: '22-43 San Francisco, California'
+
+                },
+
+                'Alex White': {
+                    image: 'https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                    name: 'Alex White',
+                    bio: "Food is love. Food is life. 🍣 If you’re into trying new restaurants or cooking together at home, we’ll get along famously. Bonus points if you can handle my weird love for pineapple on pizza 🍍🍕.",
+                    email: 'Alex.White@example.com',
+                    phone: '+234 567 8901',
+                    address: '56-43 San Francisco, California'
+
+                },
+
+
+                // Add details for all other profiles here
+            };
+
+            // Get the details based on the profile name
+            const profile = profileDetails[profileName];
+
+            // Populate the modal content with profile details
+            const modalContent = `
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="${profile.image}" class="img-fluid rounded-circle" alt="Profile Image">
+                    </div>
+                    <div class="col-md-8">
+                        <h3>${profile.name}</h3>
+                        <p><strong>Bio:</strong> ${profile.bio}</p>
+                        <p><strong>Email:</strong> ${profile.email}</p>
+                        <p><strong>Phone:</strong> ${profile.phone}</p>
+                        <p><strong>Address:</strong> ${profile.address}</p>
+                    </div>
+                </div>
+            `;
+
+            // Insert the content into the modal
+            document.getElementById('modalProfileContent').innerHTML = modalContent;
+
+            // Show the modal
+            var myModal = new bootstrap.Modal(document.getElementById('profileModal'));
+            myModal.show();
+        }
+
+        // Function to simulate adding a friend
+        function addFriend() {
+            alert("You have sent a friend request!");
+            // Add logic here to actually add the friend (e.g., API call)
+        }
+        function logout() {
+            window.location.href = 'login.html'
+        }
+
+
+        function startChat() {
+            window.location.href = 'chat.html';
+        }
+        function search() {
+            window.location.href = 'search.html';
+        }
+        function settings() {
+            window.location.href = 'settings.html'
+        }
+
+
+    </script>
+
+
+    <!-- bootstrap link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
+        integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+</body>
+
+</html>

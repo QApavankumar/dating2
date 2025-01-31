@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+        .payment-container {
+            text-align: center;
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: white;
+            width: 400px;
+        }
+        .payment-select {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .payment-form {
+            display: none;
+            margin-top: 20px;
+        }
+        .form-input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .form-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-button:disabled {
+            background-color: #ccc;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="payment-container">
+    <h2>Choose Your Payment Method</h2>
+    <select id="payment-method" class="payment-select" onchange="togglePaymentForm()">
+        <option value="">Select Payment Method</option>
+        <option value="upi">UPI Payment</option>
+        <option value="card">Card Payment</option>
+    </select>
+
+    <div id="upi-form" class="payment-form">
+        <h3>Enter Your UPI ID</h3>
+        <input type="text" id="upi-id" class="form-input" placeholder="Enter UPI ID" />
+        <div id="upi-error" class="error-message"></div>
+    </div>
+
+    <div id="card-form" class="payment-form">
+        <h3>Enter Your Card Details</h3>
+        <input type="text" id="card-number" class="form-input" placeholder="Card Number" />
+        <div id="card-number-error" class="error-message"></div>
+
+        <input type="text" id="expiry-date" class="form-input" placeholder="Expiry Date (MM/YY)" />
+        <div id="expiry-date-error" class="error-message"></div>
+
+        <input type="text" id="cvv" class="form-input" placeholder="CVV" />
+        <div id="cvv-error" class="error-message"></div>
+    </div>
+
+    <button id="submit-button" class="form-button" onclick="submitPayment()" disabled>Submit Payment</button>
+</div>
+
+<script>
+    function togglePaymentForm() {
+        const paymentMethod = document.getElementById("payment-method").value;
+        const upiForm = document.getElementById("upi-form");
+        const cardForm = document.getElementById("card-form");
+        const submitButton = document.getElementById("submit-button");
+
+        // Hide all forms and errors
+        upiForm.style.display = "none";
+        cardForm.style.display = "none";
+        submitButton.disabled = true;
+        clearErrors();
+
+        // Show relevant form based on selected payment method
+        if (paymentMethod === "upi") {
+            upiForm.style.display = "block";
+        } else if (paymentMethod === "card") {
+            cardForm.style.display = "block";
+        }
+    }
+
+    function clearErrors() {
+        document.getElementById("upi-error").textContent = "";
+        document.getElementById("card-number-error").textContent = "";
+        document.getElementById("expiry-date-error").textContent = "";
+        document.getElementById("cvv-error").textContent = "";
+    }
+
+    function submitPayment() {
+        const paymentMethod = document.getElementById("payment-method").value;
+        let paymentDetails;
+        let isValid = true;
+
+        clearErrors(); // Clear previous errors
+
+        if (paymentMethod === "upi") {
+            const upiId = document.getElementById("upi-id").value;
+            if (!validateUPI(upiId)) {
+                isValid = false;
+                document.getElementById("upi-error").textContent = "Please enter a valid UPI ID.";
+            } else {
+                paymentDetails = upiId;
+            }
+        } else if (paymentMethod === "card") {
+            const cardNumber = document.getElementById("card-number").value;
+            const expiryDate = document.getElementById("expiry-date").value;
+            const cvv = document.getElementById("cvv").value;
+
+            if (!validateCardNumber(cardNumber)) {
+                isValid = false;
+                document.getElementById("card-number-error").textContent = "Card number should be 16 digits.";
+            }
+
+            if (!validateExpiryDate(expiryDate)) {
+                isValid = false;
+                document.getElementById("expiry-date-error").textContent = "Please enter a valid expiry date (MM/YY).";
+            }
+
+            if (!validateCVV(cvv)) {
+                isValid = false;
+                document.getElementById("cvv-error").textContent = "CVV should be a 3-digit number.";
+            }
+
+            if (isValid) {
+                paymentDetails = {
+                    cardNumber: cardNumber,
+                    expiryDate: expiryDate,
+                    cvv: cvv,
+                };
+            }
+        }
+
+        if (isValid) {
+            alert("Payment successful!\n" + JSON.stringify(paymentDetails, null, 2));
+        } else {
+            alert("Please fix the errors in the form.");
+        }
+    }
+
+    function validateUPI(upiId) {
+        // Simple validation: UPI ID should contain "@" symbol
+        return upiId.includes("@");
+    }
+
+    function validateCardNumber(cardNumber) {
+        // Card number should be a 16-digit number
+        return /^[0-9]{16}$/.test(cardNumber);
+    }
+
+    function validateExpiryDate(expiryDate) {
+        // Expiry date should be in MM/YY format and valid
+        return /^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate);
+    }
+
+    function validateCVV(cvv) {
+        // CVV should be a 3-digit number
+        return /^[0-9]{3}$/.test(cvv);
+    }
+
+    // Enable or disable the submit button based on form input
+    document.getElementById("upi-id").addEventListener("input", toggleSubmitButton);
+    document.getElementById("card-number").addEventListener("input", toggleSubmitButton);
+    document.getElementById("expiry-date").addEventListener("input", toggleSubmitButton);
+    document.getElementById("cvv").addEventListener("input", toggleSubmitButton);
+
+    function toggleSubmitButton() {
+        const paymentMethod = document.getElementById("payment-method").value;
+        const submitButton = document.getElementById("submit-button");
+        let isFormComplete = false;
+
+        if (paymentMethod === "upi") {
+            isFormComplete = document.getElementById("upi-id").value !== "" && validateUPI(document.getElementById("upi-id").value);
+        } else if (paymentMethod === "card") {
+            isFormComplete = document.getElementById("card-number").value !== "" &&
+                              document.getElementById("expiry-date").value !== "" &&
+                              document.getElementById("cvv").value !== "" &&
+                              validateCardNumber(document.getElementById("card-number").value) &&
+                              validateExpiryDate(document.getElementById("expiry-date").value) &&
+                              validateCVV(document.getElementById("cvv").value);
+        }
+
+        submitButton.disabled = !isFormComplete;
+    }
+</script>
+
+</body>
+</html>

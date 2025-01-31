@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Interface with Bot Replies</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles for chat */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+    }
+    /* Increase the font size without affecting navbar height */
+.navbar-brand {
+    font-size: 30px; /* Adjust this to your desired font size */
+    padding-top: 0; /* Remove extra top padding */
+    padding-bottom: 0; /* Remove extra bottom padding */
+}
+
+
+    .chat-container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .chat-box {
+      height: 400px;
+      overflow-y: scroll;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .chat-box .message {
+      margin-bottom: 15px;
+      display: flex;
+    }
+
+    .chat-box .message .message-content {
+      background-color: #e9ecef;
+      border-radius: 10px;
+      padding: 10px;
+      max-width: 80%;
+    }
+
+    .chat-box .message.sent .message-content {
+      background-color: #007bff;
+      color: white;
+      margin-left: auto;
+    }
+
+    .message-image {
+      max-width: 200px;
+      border-radius: 10px;
+      margin-top: 5px;
+    }
+
+    .chat-footer {
+      display: flex;
+      padding: 10px;
+      background-color: #fff;
+      border-top: 1px solid #ddd;
+    }
+
+    .chat-footer input[type="text"] {
+      width: 85%;
+      padding: 10px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+    }
+
+    .chat-footer button {
+      background-color: #007bff;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .chat-footer button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <a class="navbar-brand ms-2" href="index.html"><b>DateNest</b></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item ">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+       
+        <li class="nav-item">
+          <a class="nav-link" href="Search.html">Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="chat.html">Chat</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="notification.html">Notification</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="settings.html">Settings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="subscription.html">Subscription</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="profile.html">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="logout()">logout</a>
+      </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="chat-container">
+    <div class="chat-header">
+      <h4>Chat with User</h4>
+    </div>
+
+    <!-- Chat messages -->
+    <div class="chat-box" id="chatBox">
+      <!-- Messages will be appended here -->
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-footer">
+      <input type="text" id="messageInput" placeholder="Type a message..." onkeydown="handleKeyDown(event)">
+      <button id="sendButton" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    // To add messages to chat box
+    function addMessage(content, isSent = true) {
+      const chatBox = document.getElementById('chatBox');
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      if (isSent) {
+        messageDiv.classList.add('sent');
+      }
+
+      const contentDiv = document.createElement('div');
+      contentDiv.classList.add('message-content');
+      contentDiv.innerHTML = content;
+
+      messageDiv.appendChild(contentDiv);
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;  // Auto-scroll to the latest message
+    }
+
+    // Handle sending messages
+    function sendMessage() {
+      const messageInput = document.getElementById('messageInput');
+      const messageText = messageInput.value.trim();
+      if (messageText) {
+        addMessage(messageText);  // Add the sent message to chat
+        messageInput.value = '';  // Clear the input field
+
+        // Simulate a reply from the bot based on the message content
+        setTimeout(function() {
+          handleBotResponse(messageText);  // Handle bot response
+        }, 400);  // Delay of 1 second before bot replies
+      }
+    }
+
+    // Function to handle bot's response based on user input
+    function handleBotResponse(messageText) {
+      let response = "";
+
+      // Add custom responses based on user input
+      if (messageText.toLowerCase().includes("are you ready")) {
+        response = "Yes, I am!";
+      } else if (messageText.toLowerCase().includes("hello") || messageText.toLowerCase().includes("hi")) {
+        response = "Hello! How can I help you today?";
+      } else if (messageText.toLowerCase().includes("how are you")) {
+        response = "I'm doing great, thank you!";
+      } else {
+        response = "Sorry, I didn't understand that.";
+      }
+
+      // Add bot reply to the chat box
+      addMessage(response, false);  // false indicates it's a bot reply
+    }
+
+    // Handle 'Enter' key press to send a message
+    function handleKeyDown(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+    function logout() 
+      {
+        window.location.href='login.html'
+      }
+
+    // Example: Adding an initial received message
+    addMessage("Hi! How can I assist you today?", false);
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: beige;
+        }
+        .payment-card {
+            margin: 20px 0;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .payment-method {
+            margin-bottom: 20px;
+        }
+        .payment-option {
+            cursor: pointer;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        .payment-option:hover {
+            background-color: #f7f7f7;
+        }
+        .btn-subscribe {
+            width: 100%;
+            font-size: 1.2rem;
+        }
+        .heading {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <!-- Title -->
+        <div class="heading">
+            <h1>Complete Your Payment</h1>
+            <p class="lead">You have selected <span id="plan-name"></span> plan.</p>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card payment-card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Choose Payment Method</h4>
+                        
+                        <!-- UPI Option -->
+                        <div class="payment-method">
+                            <div class="payment-option" id="upi-option" onclick="showUPIInput()">
+                                <h5>UPI Payment</h5>
+                                <p>Enter your UPI ID to complete your payment.</p>
+                                <p class="text-muted mt-2">Example: yourname@upi</p>
+                            </div>
+                            <!-- UPI ID input (Initially hidden) -->
+                            <div id="upi-input" class="mb-3" style="display: none;">
+                                <label for="upi-id" class="form-label">Enter your UPI ID</label>
+                                <input type="text" class="form-control" id="upi-id" placeholder="yourname@upi" required>
+                                <button class="btn btn-success mt-2" onclick="payWithUPI()">Proceed with UPI</button>
+                            </div>
+                        </div>
+
+                        <!-- Card Payment Option -->
+                        <div class="payment-method">
+                            <div class="payment-option" id="card-option" onclick="payWithCard()">
+                                <h5>Card Payment</h5>
+                                <p>Pay using your debit/credit card.</p>
+                                <form id="card-form" style="display:none;">
+                                    <div class="mb-3">
+                                        <label for="card-number" class="form-label">Card Number</label>
+                                        <input type="text" class="form-control" id="card-number" placeholder="1234 5678 1234 5678" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="expiry-date" class="form-label">Expiry Date</label>
+                                        <input type="text" class="form-control" id="expiry-date" placeholder="MM/YY" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="cvv" class="form-label">CVV</label>
+                                        <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Pay Now</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button class="btn btn-secondary" onclick="window.location.href='subscription.html'">Cancel Payment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get the plan from the URL query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const plan = urlParams.get('plan');
+        document.getElementById('plan-name').textContent = plan;
+
+        // Handle UPI payment click - Show UPI ID input field
+        function showUPIInput() {
+            document.getElementById('upi-input').style.display = 'block';
+        }
+
+        // Handle UPI payment
+        function payWithUPI() {
+            const upiId = document.getElementById('upi-id').value;
+            if (upiId) {
+                alert(`Payment successful with UPI ID: ${upiId}`);
+            } else {
+                alert('Please enter a valid UPI ID.');
+            }
+        }
+
+        // Handle Card Payment click
+        function payWithCard() {
+            document.getElementById('card-form').style.display = 'block';
+            alert('Please fill in your card details and click Pay Now.');
+        }
+
+        // Handle Card Form Submission
+        document.getElementById('card-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            alert('Payment Successful with Card!');
+        });
+    </script>
+</body>
+</html>

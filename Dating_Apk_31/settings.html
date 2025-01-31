@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Screen</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        .settings-section {
+            margin-bottom: 30px;
+        }
+        .setting-title {
+            font-weight: bold;
+        }
+        .switch-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn-save {
+            width: 100%;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        body{
+            background-color: rgb(236, 219, 197);
+        }
+        /* Increase the font size without affecting navbar height */
+.navbar-brand {
+    font-size: 30px; /* Adjust this to your desired font size */
+    padding-top: 0; /* Remove extra top padding */
+    padding-bottom: 0; /* Remove extra bottom padding */
+}
+
+
+      </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <a class="navbar-brand ms-2" href="index.html"><b>DateNest</b></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="Search.html">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="chat.html">Chat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="notification.html">Notification</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="settings.html">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="subscription.html">Subscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="profile.html">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="logout()">logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+  
+    <div class="container py-5">
+        <div class="text-center mb-4">
+            <h1>Settings</h1>
+            <p class="lead">Manage your app preferences, privacy, and notifications.</p>
+        </div>
+
+        <!-- App Preferences -->
+        <div class="settings-section">
+            <h3 class="setting-title">App Preferences</h3>
+            <form>
+                <div class="form-group">
+                    <label for="social-link">Link Social Accounts </label>
+                     <button type="button"><a href="https://www.facebook.com/login/"><i class="fa-brands fa-facebook"></i></a></button>
+                     <button type="button"><a href="https://www.instagram.com/accounts/login/?hl=en"><i class="fa-brands fa-instagram"></i></a></button>
+                      </div>
+            </form>
+        </div>
+
+        <!-- Privacy Settings -->
+        <div class="settings-section">
+            <h3 class="setting-title">Privacy Settings</h3>
+            <form>
+                <div class="form-group">
+                    <label for="profile-visibility" class="switch-label">Profile Visibility</label>
+                    <select class="form-select" id="profile-visibility">
+                        <option value="everyone">Visible to Everyone</option>
+                        <option value="matches">Visible to Matches Only</option>
+                        <option value="none">Invisible</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message-visibility" class="switch-label">Message Privacy</label>
+                    <select class="form-select" id="message-visibility">
+                        <option value="everyone">Allow Messages from Everyone</option>
+                        <option value="matches">Allow Messages from Matches Only</option>
+                        <option value="none">Block All Messages</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="data-privacy" class="switch-label">Data Privacy</label>
+                    <select class="form-select" id="data-privacy">
+                        <option value="strict">Strict Privacy</option>
+                        <option value="standard">Standard Privacy</option>
+                        <option value="custom">Custom Settings</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <!-- Notification Settings -->
+        <div class="settings-section">
+            <h3 class="setting-title">Notification Settings</h3>
+            <form>
+                <div class="form-group">
+                    <label class="switch-label">Push Notifications</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="push-notifications" checked>
+                        <label class="form-check-label" for="push-notifications">Enable Push Notifications</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="switch-label">Email Notifications</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="email-notifications" checked>
+                        <label class="form-check-label" for="email-notifications">Enable Email Notifications</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="switch-label">In-app Notifications</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="inapp-notifications" checked>
+                        <label class="form-check-label" for="inapp-notifications">Enable In-app Notifications</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Save Settings -->
+        <div class="mt-4 text-center">
+            <button class="btn btn-success btn-save" onclick="saveSettings()">Save Settings</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.3 JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <script>
+      
+
+        // Function to save settings
+        function saveSettings() {
+            alert("Settings saved successfully!");
+        }
+        function logout() 
+      {
+        window.location.href='login.html'
+      }
+
+
+           </script>
+</body>
+</html>
